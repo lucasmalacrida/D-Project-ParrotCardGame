@@ -14,6 +14,9 @@ function addCards(){
     let N;
     do {
         N = prompt("Com quantas cartas quer jogar? (4 / 6 / 8 / 10 / 12 / 14)");
+        if (N === null){
+            return;
+        }
     } while ( N === '' || !([4,6,8,10,12,14].includes(Number(N))) );
 
     // Criando a array das cartas e embaralhando-a para misturar as iguais:
@@ -30,10 +33,10 @@ function addCards(){
         let cardHTML = 
         `
         <div class="card">
-            <div class="front-face face hidden">
+            <div class="front-face face">
                 <img alt="Parrot ${cardIndex[i]}" src="./media/gifs/parrot${cardIndex[i]}.gif">
             </div>
-            <div class="back-face face">
+            <div class="back-face face" onclick="cardFlip(this)">
                 <img alt="Parrot" src="./media/parrot.png">
             </div>
         </div>
@@ -41,5 +44,27 @@ function addCards(){
         mainTag.innerHTML += cardHTML;
     }
 }
-
 addCards();
+
+function cardFlip(backCard){
+    let card = backCard.parentNode;
+    card.lastElementChild.classList.add("rotate-back-face");
+    card.firstElementChild.classList.add("rotate-front-face");
+
+    let cardFiducial = document.querySelector(".fiducial");
+    if (cardFiducial === null){
+        card.classList.add("fiducial");
+    } else if (card.innerHTML === cardFiducial.innerHTML){
+        cardFiducial.classList.remove("fiducial");
+    } else {
+        setTimeout(cardsUnflip,1000,card,cardFiducial);
+    }
+}
+
+function cardsUnflip(card,cardFiducial){
+    card.firstElementChild.classList.remove("rotate-front-face");
+    card.lastElementChild.classList.remove("rotate-back-face");
+    cardFiducial.classList.remove("fiducial");
+    cardFiducial.firstElementChild.classList.remove("rotate-front-face");
+    cardFiducial.lastElementChild.classList.remove("rotate-back-face");
+}

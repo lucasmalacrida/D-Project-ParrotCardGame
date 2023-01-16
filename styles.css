@@ -1,4 +1,4 @@
-/* ----- Fonts ------------------------------ */
+/* ----- Font and IMG ------------------------------ */
 h1 {
     color: #75B79E;
     font-family: "Roboto", "Sans-serif";
@@ -12,7 +12,16 @@ h1 {
     margin-bottom: 47px;
 }
 
-/* ----- Divs ------------------------------ */
+img {
+    width: 100px;
+    height: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 22px;
+}
+
+/* ----- Tags and Divs ------------------------------ */
 body {
     background-color: #eef9bf;
 }
@@ -34,25 +43,38 @@ main {
     width: 117px;
     height: 146px;
     margin: 17px;
+    position: relative;
 }
 
-img {
-    width: 100px;
-    height: 100px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 22px;
+.face {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    transition: all .5s;
+    transform-style: preserve-3d;
 }
 
-.hidden {
-    display: none !important; 
+.front-face {
+    transform: rotateY(180deg);
 }
 
+.back-face:hover {
+    cursor: pointer;
+}
+
+.rotate-front-face {
+    transform: rotateY(0deg);
+}
+
+.rotate-back-face {
+    transform: rotateY(-180deg);
+}
+
+/* ----- Media Query ------------------------------ */
 @media (max-width: 335px) {
     h1 {
         font-size: 36px;
         line-height: 42px;
     }
-
 }
