@@ -38,12 +38,16 @@ main {
 
 img {
     width: 100px;
+    height: 100px;
     display: block;
     margin-left: auto;
     margin-right: auto;
     margin-top: 22px;
 }
 
+.hidden {
+    display: none !important; 
+}
 
 @media (max-width: 335px) {
     h1 {
