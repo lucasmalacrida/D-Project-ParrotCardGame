@@ -10,7 +10,7 @@ function refreshTime(){
     if (['0','1','2','3','4','5','6','7','8','9'].includes(fraction)){
         fraction = '0' + fraction;
     }
-    document.querySelector("p").innerHTML = `<span>${second}</span>` + ":" + fraction ;
+    document.querySelector("p").innerHTML = `<span data-test="timer">${second}</span>` + ":" + fraction ;
     time++;
 }
 
@@ -46,12 +46,12 @@ function addCards(){
     for (let i = 0; i < N; i++){
         let cardHTML = 
         `
-        <div class="card">
+        <div class="card" data-test="card">
             <div class="front-face face">
-                <img alt="Parrot ${cardIndex[i]}" src="./media/gifs/parrot${cardIndex[i]}.gif">
+                <img alt="Parrot ${cardIndex[i]}" src="./media/gifs/parrot${cardIndex[i]}.gif" data-test="face-up-image">
             </div>
             <div class="back-face face" onclick="cardFlip(this);verifyEndGame()">
-                <img alt="Parrot" src="./media/parrot.png">
+                <img alt="Parrot" src="./media/parrot.png" data-test="face-down-image">
             </div>
         </div>
         `;
@@ -103,7 +103,7 @@ function verifyEndGame(){
 
             if (answer === "sim"){
                 document.querySelector("main").innerHTML = "";
-                document.querySelector("p").innerHTML = "<span>0</span>:00"
+                document.querySelector("p").innerHTML = `<span data-test="timer">0</span>:00`
                 time = 0;
                 countFlip = 0;
 
