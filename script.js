@@ -9,9 +9,9 @@ gifIndex.sort(compareFunction);
 // ----------------------------------------------------------------------------------------------------
 
 // Distribuindo as cartas:
+let N;
 function addCards(){
     // Determinando o número de cartas:
-    let N;
     do {
         N = prompt("Com quantas cartas quer jogar? (4 / 6 / 8 / 10 / 12 / 14)");
         if (N === null){
@@ -36,7 +36,7 @@ function addCards(){
             <div class="front-face face">
                 <img alt="Parrot ${cardIndex[i]}" src="./media/gifs/parrot${cardIndex[i]}.gif">
             </div>
-            <div class="back-face face" onclick="cardFlip(this)">
+            <div class="back-face face" onclick="cardFlip(this);verifyEndGame()">
                 <img alt="Parrot" src="./media/parrot.png">
             </div>
         </div>
@@ -46,6 +46,7 @@ function addCards(){
 }
 addCards();
 
+let countFlip = 0;
 function cardFlip(backCard){
     let card = backCard.parentNode;
     card.lastElementChild.classList.add("rotate-back-face");
@@ -59,6 +60,7 @@ function cardFlip(backCard){
     } else {
         setTimeout(cardsUnflip,1000,card,cardFiducial);
     }
+    countFlip++;
 }
 
 function cardsUnflip(card,cardFiducial){
@@ -67,4 +69,10 @@ function cardsUnflip(card,cardFiducial){
     cardFiducial.classList.remove("fiducial");
     cardFiducial.firstElementChild.classList.remove("rotate-front-face");
     cardFiducial.lastElementChild.classList.remove("rotate-back-face");
+}
+
+function verifyEndGame(){
+    if (document.querySelectorAll(".rotate-front-face").length === Number(N)){
+        setTimeout(alert, 500, `Você ganhou em ${countFlip} jogadas!`);
+    }
 }
