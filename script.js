@@ -1,4 +1,20 @@
-// Embaralhando os índices das gifs a serem utilizadas:
+// Codando o timer: ----------------------------------------------------------------------------------------------------
+let time = 0, second, fraction, idInterval;
+
+function startClock(){
+    idInterval = setInterval(refreshTime, 10);
+}
+function refreshTime(){
+    second = Math.floor(time/100).toString();
+    fraction = (time - 100*second).toString();
+    if (['0','1','2','3','4','5','6','7','8','9'].includes(fraction)){
+        fraction = '0' + fraction;
+    }
+    document.querySelector("p").innerHTML = `<span>${second}</span>` + ":" + fraction ;
+    time++;
+}
+
+// Embaralhando os índices das gifs: ----------------------------------------------------------------------------------------------------
 function compareFunction(){ 
 	return Math.random() - 0.5; 
 }
@@ -6,14 +22,12 @@ function compareFunction(){
 const gifIndex = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 gifIndex.sort(compareFunction); 
 
-// ----------------------------------------------------------------------------------------------------
-
-// Distribuindo as cartas:
+// Distribuindo as cartas: ----------------------------------------------------------------------------------------------------
 let N;
 function addCards(){
     // Determinando o número de cartas:
     do {
-        N = prompt("Com quantas cartas quer jogar? (4 / 6 / 8 / 10 / 12 / 14)");
+        N = prompt("Com quantas cartas quer jogar? (4 | 6 | 8 | 10 | 12 | 14)");
         if (N === null){
             return;
         }
@@ -43,9 +57,13 @@ function addCards(){
         `;
         mainTag.innerHTML += cardHTML;
     }
+
+    // Iniciando o cronômetro:
+    startClock();
 }
 addCards();
 
+// Lógica das Viradas de Cartas: ----------------------------------------------------------------------------------------------------
 let countFlip = 0;
 function cardFlip(backCard){
     let card = backCard.parentNode;
@@ -71,8 +89,27 @@ function cardsUnflip(card,cardFiducial){
     cardFiducial.lastElementChild.classList.remove("rotate-back-face");
 }
 
+// Finalização do jogo: ----------------------------------------------------------------------------------------------------
 function verifyEndGame(){
     if (document.querySelectorAll(".rotate-front-face").length === Number(N)){
-        setTimeout(alert, 500, `Você ganhou em ${countFlip} jogadas!`);
+        clearTimeout(idInterval);
+        function endGame(){
+            alert(`Você ganhou em ${countFlip} jogadas! A duração do jogo foi de ${second} segundos!`);
+
+            let answer;
+            do {
+                answer = prompt("Gostaria de reiniciar a partida? (sim | não)");
+            } while ( answer !== "sim" && answer !== "não" );
+
+            if (answer === "sim"){
+                document.querySelector("main").innerHTML = "";
+                document.querySelector("p").innerHTML = "<span>0</span>:00"
+                time = 0;
+                countFlip = 0;
+
+                setTimeout(addCards,300);
+            }
+        }
+        setTimeout(endGame,300);
     }
 }

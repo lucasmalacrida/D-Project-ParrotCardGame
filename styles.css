@@ -1,4 +1,4 @@
-/* ----- Font and IMG ------------------------------ */
+/* ----- Texts and IMG ------------------------------ */
 h1 {
     color: #75B79E;
     font-family: "Roboto", "Sans-serif";
@@ -19,6 +19,15 @@ img {
     margin-left: auto;
     margin-right: auto;
     margin-top: 22px;
+}
+
+p {
+    display: block;
+    color: #eef9bf;
+    font-family: "Roboto", "Sans-serif";
+    font-weight: 500;
+    font-size: 28px;
+    text-align: center;
 }
 
 /* ----- Tags and Divs ------------------------------ */
@@ -71,10 +80,36 @@ main {
     transform: rotateY(-180deg);
 }
 
+.container-clock {
+    position: absolute;
+    top: 120px;
+    width: 100%;
+}
+
+.clock {
+    background-color: #75B79E;
+    margin-left: auto;
+    margin-right: auto;
+
+    width: 100px;
+    border-radius: 10px;
+}
+
 /* ----- Media Query ------------------------------ */
+@media (max-width: 540px) {
+    .container-clock {
+        top: 186px;
+    }
+}
 @media (max-width: 335px) {
     h1 {
         font-size: 36px;
         line-height: 42px;
+    }
+    p {
+        font-size: 18px;
+    }
+    .container-clock {
+        top: 147px;
     }
 }
